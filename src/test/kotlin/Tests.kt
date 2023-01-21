@@ -1,19 +1,18 @@
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
-import kotlin.test.assertTrue
 
-class Tests {
+class FrenchIfTest {
     @Test
-    fun siTest() {
+    fun `test de si pour un String`() {
         val testValue = ""
         val result = si(true) { testValue }
-        val resultString: String = result.toString()
-        assertEquals(resultString, testValue)
+        
+        assertEquals(result.ifResult, testValue)
     }
     
     @Test
-    fun sinonTest() {
+    fun `test de sinon pour un String`() {
         val testValue = ""
         val elseValue = "else"
         val result = si(false) {
@@ -22,8 +21,51 @@ class Tests {
             elseValue
         }
         
-        val resultString: String = result.toString()
-        assertEquals(resultString, elseValue)
-        assertNotEquals(resultString, testValue)
+        assertEquals(result, elseValue)
+        assertNotEquals(result, testValue)
+    }
+    
+    @Test
+    fun `test de si pour un Int`() {
+        val testValue = 0
+        val result = si(true) { testValue }
+        
+        assertEquals(result.ifResult, testValue)
+    }
+    
+    @Test
+    fun `test de sinon pour un Int`() {
+        val testValue = 0
+        val elseValue = 1
+        val result = si(false) {
+            testValue
+        } sinon {
+            elseValue
+        }
+        
+        assertEquals(result, elseValue)
+        assertNotEquals(result, testValue)
+    }
+    
+    @Test
+    fun `test de si pour une Pair`() {
+        val testValue = Pair("salut", "bonjour")
+        val result = si(true) { testValue }
+        
+        assertEquals(result.ifResult, testValue)
+    }
+    
+    @Test
+    fun `test de sinon pour une Pair`() {
+        val testValue = Pair("salut", "bonjour")
+        val elseValue = Pair("bonsoir", "bonne nuit")
+        val result = si(false) {
+            testValue
+        } sinon {
+            elseValue
+        }
+        
+        assertEquals(result, elseValue)
+        assertNotEquals(result, testValue)
     }
 }
