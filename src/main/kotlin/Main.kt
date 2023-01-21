@@ -1,18 +1,18 @@
 
-data class IfType(
+data class IfType<T>(
     val ifValue: Boolean,
-    val ifResult: Any?
+    val ifResult: T?
 ) {
     override fun toString(): String {
         return ifResult.toString()
     }
 }
-fun si(boolean: Boolean, action: () -> Any?): IfType {
+fun<T> si(boolean: Boolean, action: () -> T?): IfType<T> {
     if (boolean) return IfType(true, action())
     return IfType(false, null)
 }
 
-infix fun IfType.sinon(action: () -> Any?): Any? {
+infix fun<T> IfType<T>.sinon(action: () -> T?): T? {
     if (ifValue) return ifResult
     return action()
 }
